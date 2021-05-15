@@ -1,0 +1,5 @@
+.input {
+  @include general-input;
+  @include rounded;
+  @include bordered;
+}

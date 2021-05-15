@@ -1,0 +1,25 @@
+@import './utils';
+@import './libs';
+
+//components
+@import './components';
+
+//pages
+@import './pages/home.scss';
+
+//global style 
+* {
+  font-family: $font;
+  color: $black;
+}
+
+// logo universal size  
+.logo {
+  font-size: $logo-font-size;
+  font-weight: lighter;
+}
+
+//btn sizes
+.btn-big {
+  padding: 3px 15px 8px;
+}

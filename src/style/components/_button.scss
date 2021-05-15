@@ -1,0 +1,5 @@
+.btn {
+  @include general-button;
+  @include rounded;
+  @include bordered;
+}
