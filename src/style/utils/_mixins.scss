@@ -25,7 +25,11 @@
   padding:0px 5px 7px;
 }
 
-//100vh height for every screen but small ones
+@mixin error-txt {
+  color: $error;
+}
+
+//100vh height for every screen but small ones and no scroll
 @mixin force-fullscreen-ns {
   @include media(">tablet") {
     height: 100vh;

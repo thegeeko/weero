@@ -1,14 +1,14 @@
-.home-container {
+.signup-container {
   display: grid;
   @include media(">tablet") {
     grid-template-columns: repeat(2, 1fr);
   }
-  .home-illustration-container {
+  .signup-illustration-container {
     display: grid;
     place-items: center;
     background-color: $primary;
     border-radius: 0 12px 12px 0;
-    .home-illustration {
+    .signup-illustration {
       @include force-fullscreen-ns;
       width: 80%;
       height: 100%;
@@ -17,15 +17,15 @@
       background-color: white;
     }
   }
-  .home-info {
+  .signup-info {
     display: grid;
-    .home-logo {
+    .signup-logo {
       font-size: $logo-font-size;
       align-self: end;
       margin-bottom: 0;
     }
-    .home-form,
-    .home-paragraph {
+    .signup-form,
+    .signup-paragraph {
       font-size: $prp-font-size;
       p {
         margin-bottom: 5px;
@@ -51,15 +51,15 @@
   }
   @include media("<=tablet") {
     text-align: center;
-    .home-logo {
+    .signup-logo {
       margin-bottom: 0;
     }
-    .home-paragraph {
+    .signup-paragraph {
       margin-top: -75px;
       padding: 0 10px;
       margin-bottom: 70px;
     }
-    .home-form {
+    .signup-form {
       padding: 0 10px;
       input {
         margin: auto;

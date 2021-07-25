@@ -1,8 +1,10 @@
 //colors
 $black:rgb(47, 46, 65);
 $primary:#F9F4F5;
+$error:#F18097;
 
 //fonts
 $font:'Itim', cursive;
 $logo-font-size: clamp(52pt, 5vw, 77pt);
-$prp-font-size: clamp(19pt, 2vw, 35pt)
+$prp-font-size: clamp(19pt, 2vw, 35pt);
+$sm-font-size: clamp(10pt, 2vw, 14pt)

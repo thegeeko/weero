@@ -2,12 +2,18 @@ import React from "react";
 
 type ButtonProps = {
   children?: string;
-  classes: string;
+  classes?: string;
+  onClick?: Function;
+  type?:"button" | "submit" | "reset" 
 };
 
 const Btn: React.FC<ButtonProps> = (props: ButtonProps) => {
   return (
-    <button className={`btn ${props.classes ? props.classes : ""}`}>
+    <button
+      onClick={() => props.onClick ? props.onClick() : ''}
+      className={`btn ${props.classes ? props.classes : ""}`}
+      type={props.type}
+    >
       {props.children}
     </button>
   );

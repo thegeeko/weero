@@ -1,19 +1,20 @@
-@import './utils';
-@import './libs';
+@import "./utils";
+@import "./libs";
 
 //components
-@import './components';
+@import "./components";
 
 //pages
-@import './pages/home.scss';
+@import "./pages/home";
+@import "./pages/signup";
 
-//global style 
+//global style
 * {
   font-family: $font;
   color: $black;
 }
 
-// logo universal size  
+// logo universal size
 .logo {
   font-size: $logo-font-size;
   font-weight: lighter;
@@ -22,4 +23,22 @@
 //btn sizes
 .btn-big {
   padding: 3px 15px 8px;
+}
+
+//errors on forms
+.input-error-txt {
+  @include error-txt;
+  font-size: $sm-font-size !important;
+  margin-top: -7px;
+}
+
+//container for inputs and errors
+.input-error-cont {
+  input {
+    margin-bottom: 0!important;
+  }
+  .input-error-txt {
+    margin-bottom: 20px!important;
+    margin-left: 12px!important;
+  }
 }
