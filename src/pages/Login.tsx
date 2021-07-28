@@ -1,46 +1,40 @@
 import React, { useEffect, useState } from "react";
-import SignupIllstration from "../assets/signup-illustration";
+import { useHistory } from "react-router-dom";
+import SigninIllstration from "../assets/signin-illustration";
 import Btn from "../components/Btn";
 import Input from "../components/Input";
 import useScreenSize from "../hooks/useScreenSize";
 import useQuery from "../hooks/useQuery";
 import { useFormik } from "formik";
-import { signupValidation } from "../utils/validators";
+import { signinValidation } from "../utils/validators";
 import { auth } from "../utils/firebase";
 
-const Signup: React.FC = () => {
+const Signin: React.FC = () => {
   const [emailStatus, setEmailStatus] = useState(false);
   const [user, setUser] = useState<firebase.default.User | null>(null);
   const query = useQuery();
+  const history = useHistory();
   const screenSize = useScreenSize();
   const formik = useFormik({
     onSubmit: (creds) => {
       auth
-        .createUserWithEmailAndPassword(creds.email, creds.password)
-        .then((newUser) => {
-          newUser.user
-            ?.updateProfile({ displayName: creds.username })
-            .then((a) => {
-              console.log(a);
-            });
-        })
+        .signInWithEmailAndPassword(creds.email, creds.password)
         .catch((err) => {
-          formik.setFieldError("email", err.message);
+          formik.setFieldError("password", err.message);
         });
     },
     initialValues: {
       email: "",
-      username: "",
       password: "",
-      passwordConfirm: "",
     },
-    validationSchema: signupValidation,
+    validationSchema: signinValidation,
   });
 
   auth.onAuthStateChanged((_user) => {
     if (_user) {
       setUser(_user);
       setEmailStatus(_user.emailVerified);
+      emailStatus ? history.push("/tl") : history.push("/signup");
     } else {
       setUser(null);
     }
@@ -55,10 +49,10 @@ const Signup: React.FC = () => {
 
   return (
     <main>
-      <div className="signup split-layout-cont">
+      <div className="signin split-layout-cont">
         {!["md", "sm"].includes(screenSize) && (
           <div className="illustration-cont">
-            <SignupIllstration className="illustration" />
+            <SigninIllstration className="illustration" />
           </div>
         )}
         <div className="info-cont">
@@ -66,7 +60,7 @@ const Signup: React.FC = () => {
 
           {["md", "sm"].includes(screenSize) && (
             <div className="illustration-cont">
-              <SignupIllstration className="illustration" />
+              <SigninIllstration className="illustration" />
             </div>
           )}
 
@@ -82,15 +76,6 @@ const Signup: React.FC = () => {
 
           {!user && (
             <form className="form" onSubmit={formik.handleSubmit}>
-              <Input
-                classes="signup-email"
-                type="text"
-                placeholder="Username"
-                value={formik.values.username}
-                error={formik.errors.username}
-                onChange={formik.handleChange}
-                id="username"
-              />
               <Input
                 classes="signup-email"
                 type="email"
@@ -109,17 +94,8 @@ const Signup: React.FC = () => {
                 onChange={formik.handleChange}
                 id="password"
               />
-              <Input
-                classes="signup-email"
-                type="password"
-                placeholder="Password confirmation"
-                value={formik.values.passwordConfirm}
-                error={formik.errors.passwordConfirm}
-                onChange={formik.handleChange}
-                id="passwordConfirm"
-              />
               <Btn type="submit" classes="signup-join btn-big">
-                join :)
+                I'm back :)
               </Btn>
             </form>
           )}
@@ -129,4 +105,4 @@ const Signup: React.FC = () => {
   );
 };
 
-export default Signup;
+export default Signin;

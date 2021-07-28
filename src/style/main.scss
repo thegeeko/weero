@@ -5,7 +5,7 @@
 @import "./components";
 
 //pages
-@import "./pages/home";
+@import "./pages/home.scss";
 
 //global style
 * {
@@ -69,28 +69,29 @@
         margin-bottom: 20px;
       }
     }
+
     @include media(">tablet") {
       padding: 0 30px;
       grid-template-rows: 30vh 0.4fr auto;
     }
-  }
 
-  @include media("<=tablet") {
-    text-align: center;
-    .logo {
-      margin-bottom: 50px;
-    }
-    .paragraph {
-      margin-top: 10px;
-      padding: 0 10px;
-      margin-bottom: 70px;
-    }
-    .form {
-      padding: 0 10px;
-      input {
-        margin: auto;
+    @include media("<=tablet") {
+      text-align: center;
+      .logo {
+        margin-bottom: 50px;
       }
-      margin-bottom: 30px;
+      .paragraph {
+        margin-top: 10px;
+        padding: 0 10px;
+        margin-bottom: 70px;
+      }
+      .form {
+        padding: 0 10px;
+        input {
+          margin: auto;
+        }
+        margin-bottom: 30px;
+      }
     }
   }
 }

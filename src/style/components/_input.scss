@@ -3,3 +3,7 @@
   @include rounded;
   @include bordered;
 }
+
+.input-error {
+  border-color: $error;
+}

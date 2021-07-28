@@ -10,11 +10,6 @@ const Home: React.FC = () => {
   const [email, setEmail] = useState("");
   const history = useHistory();
 
-  function handleJoin() {
-    console.log("object");
-    email ? history.push(`/signup?email=${email}`) : history.push(`/signup`);
-  }
-
   function handleEmailChange(e: React.FormEvent<HTMLInputElement>) {
     console.log(e);
     setEmail(e?.currentTarget?.value);
@@ -52,11 +47,27 @@ const Home: React.FC = () => {
               placeholder="Email"
               onChange={handleEmailChange}
             />
-            <Btn classes="home-join btn-big" onClick={handleJoin}>
+            <Btn
+              classes="home-join btn-big"
+              onClick={() =>
+                email
+                  ? history.push(`/signup?email=${email}`)
+                  : history.push(`/signup`)
+              }
+            >
               join :)
             </Btn>
             or
-            <Btn classes="home-login btn-big">login :)</Btn>
+            <Btn
+              classes="home-login btn-big"
+              onClick={() =>
+                email
+                  ? history.push(`/login?email=${email}`)
+                  : history.push(`/login`)
+              }
+            >
+              login :)
+            </Btn>
           </div>
         </div>
       </div>

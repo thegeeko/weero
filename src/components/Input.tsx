@@ -14,7 +14,7 @@ const Input: React.FC<ButtonProps> = (props: ButtonProps) => (
   <div className={props.error ? "input-error-cont" : ""}>
     <input
       onChange={(e) => (props.onChange ? props.onChange(e) : "")}
-      className={`input ${props.classes ? props.classes : ""}`}
+      className={`input ${props.error ? "input-error" : ""}`}
       type={props.type}
       placeholder={props.placeholder}
       value={props.value}
