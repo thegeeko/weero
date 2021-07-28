@@ -6,7 +6,6 @@
 
 //pages
 @import "./pages/home";
-@import "./pages/signup";
 
 //global style
 * {
@@ -25,6 +24,77 @@
   padding: 3px 15px 8px;
 }
 
+//main split layout
+.split-layout-cont {
+  @include split-children;
+  .illustration-cont {
+    display: grid;
+    place-items: center;
+    background-color: $primary;
+    border-radius: 0 12px 12px 0;
+    .illustration {
+      @include force-fullscreen-ns;
+      width: 80%;
+      height: 100%;
+    }
+    @include media("<=tablet") {
+      background-color: white;
+    }
+  }
+
+  .info-cont {
+    display: grid;
+    .logo {
+      font-size: $logo-font-size;
+      align-self: end;
+      margin-bottom: 0;
+    }
+    .form,
+    .paragraph {
+      font-size: $prp-font-size;
+      p {
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+      button {
+        &:not(:first-of-type) {
+          margin-left: 10px;
+        }
+        &:first-of-type {
+          margin-right: 5px;
+        }
+      }
+      input {
+        display: block;
+        margin-bottom: 20px;
+      }
+    }
+    @include media(">tablet") {
+      padding: 0 30px;
+      grid-template-rows: 30vh 0.4fr auto;
+    }
+  }
+
+  @include media("<=tablet") {
+    text-align: center;
+    .logo {
+      margin-bottom: 50px;
+    }
+    .paragraph {
+      margin-top: 10px;
+      padding: 0 10px;
+      margin-bottom: 70px;
+    }
+    .form {
+      padding: 0 10px;
+      input {
+        margin: auto;
+      }
+      margin-bottom: 30px;
+    }
+  }
+}
+
 //errors on forms
 .input-error-txt {
   @include error-txt;
@@ -35,10 +105,10 @@
 //container for inputs and errors
 .input-error-cont {
   input {
-    margin-bottom: 0!important;
+    margin-bottom: 0 !important;
   }
   .input-error-txt {
-    margin-bottom: 20px!important;
-    margin-left: 12px!important;
+    margin-bottom: 20px !important;
+    margin-left: 12px !important;
   }
 }

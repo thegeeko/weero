@@ -35,3 +35,10 @@
     height: 100vh;
   }
 }
+
+@mixin split-children {
+  display: grid;
+  @include media(">tablet") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

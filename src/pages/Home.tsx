@@ -11,33 +11,33 @@ const Home: React.FC = () => {
   const history = useHistory();
 
   function handleJoin() {
-    console.log('object')
+    console.log("object");
     email ? history.push(`/signup?email=${email}`) : history.push(`/signup`);
   }
 
-  function handleEmailChange(e:React.FormEvent<HTMLInputElement>) {
-    console.log(e)
+  function handleEmailChange(e: React.FormEvent<HTMLInputElement>) {
+    console.log(e);
     setEmail(e?.currentTarget?.value);
   }
 
   return (
     <main>
-      <div className="home-container">
+      <div className="split-layout-cont home">
         {!["md", "sm"].includes(screenSize) && (
-          <div className="home-illustration-container">
-            <HomeIllustration className="home-illustration" />
+          <div className="illustration-cont">
+            <HomeIllustration className="illustration" />
           </div>
         )}
-        <div className="home-info">
-          <h1 className="logo home-logo">Weero</h1>
+        <div className="info-cont">
+          <h1 className="logo">Weero</h1>
 
           {["md", "sm"].includes(screenSize) && (
-            <div className="home-illustration-container">
-              <HomeIllustration className="home-illustration" />
+            <div className="illustration-cont">
+              <HomeIllustration className="illustration" />
             </div>
           )}
 
-          <div className="home-paragraph">
+          <div className="paragraph">
             <p>
               it's all about you and your beautiful smile share it with the
               world.
@@ -45,8 +45,13 @@ const Home: React.FC = () => {
             <p>smile, spread love and beauty around.</p>
           </div>
 
-          <div className="home-form">
-            <Input classes="home-email" type="email" placeholder="Email" onChange={handleEmailChange}/>
+          <div className="form">
+            <Input
+              classes="home-email"
+              type="email"
+              placeholder="Email"
+              onChange={handleEmailChange}
+            />
             <Btn classes="home-join btn-big" onClick={handleJoin}>
               join :)
             </Btn>

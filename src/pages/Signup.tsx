@@ -53,33 +53,33 @@ const Signup: React.FC = () => {
 
   return (
     <main>
-      <div className="signup-container">
+      <div className="signup split-layout-cont">
         {!["md", "sm"].includes(screenSize) && (
-          <div className="signup-illustration-container">
-            <SignupIllstration className="signup-illustration" />
+          <div className="illustration-cont">
+            <SignupIllstration className="illustration" />
           </div>
         )}
-        <div className="signup-info">
-          <h1 className="logo signup-logo">Weero</h1>
+        <div className="info-cont">
+          <h1 className="logo ">Weero</h1>
 
           {["md", "sm"].includes(screenSize) && (
-            <div className="signup-illustration-container">
-              <SignupIllstration className="signup-illustration" />
+            <div className="illustration-cont">
+              <SignupIllstration className="illustration" />
             </div>
           )}
 
-          <div className="signup-paragraph">
+          <div className="paragraph">
             <p>Just a few steps away.</p>
           </div>
 
           {user && !emailStatus && (
-            <p className="signup-form">
+            <p className="form">
               Verification email is sent to your email check it out plz :3.
             </p>
           )}
 
           {!user && (
-            <form className="signup-form" onSubmit={formik.handleSubmit}>
+            <form className="form" onSubmit={formik.handleSubmit}>
               <Input
                 classes="signup-email"
                 type="text"
