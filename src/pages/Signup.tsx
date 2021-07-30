@@ -83,7 +83,6 @@ const Signup: React.FC = () => {
           {!user && (
             <form className="form" onSubmit={formik.handleSubmit}>
               <Input
-                classes="signup-email"
                 type="text"
                 placeholder="Username"
                 value={formik.values.username}
@@ -92,7 +91,6 @@ const Signup: React.FC = () => {
                 id="username"
               />
               <Input
-                classes="signup-email"
                 type="email"
                 placeholder="Email"
                 value={formik.values.email}
@@ -101,7 +99,6 @@ const Signup: React.FC = () => {
                 id="email"
               />
               <Input
-                classes="signup-email"
                 type="password"
                 placeholder="Password"
                 value={formik.values.password}
@@ -110,7 +107,6 @@ const Signup: React.FC = () => {
                 id="password"
               />
               <Input
-                classes="signup-email"
                 type="password"
                 placeholder="Password confirmation"
                 value={formik.values.passwordConfirm}

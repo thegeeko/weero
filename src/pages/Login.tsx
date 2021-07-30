@@ -65,40 +65,30 @@ const Signin: React.FC = () => {
           )}
 
           <div className="paragraph">
-            <p>Just a few steps away.</p>
+            <p>Hi, we missed you</p>
           </div>
 
-          {user && !emailStatus && (
-            <p className="form">
-              Verification email is sent to your email check it out plz :3.
-            </p>
-          )}
-
-          {!user && (
-            <form className="form" onSubmit={formik.handleSubmit}>
-              <Input
-                classes="signup-email"
-                type="email"
-                placeholder="Email"
-                value={formik.values.email}
-                error={formik.errors.email}
-                onChange={formik.handleChange}
-                id="email"
-              />
-              <Input
-                classes="signup-email"
-                type="password"
-                placeholder="Password"
-                value={formik.values.password}
-                error={formik.errors.password}
-                onChange={formik.handleChange}
-                id="password"
-              />
-              <Btn type="submit" classes="signup-join btn-big">
-                I'm back :)
-              </Btn>
-            </form>
-          )}
+          <form className="form" onSubmit={formik.handleSubmit}>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={formik.values.email}
+              error={formik.errors.email}
+              onChange={formik.handleChange}
+              id="email"
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              value={formik.values.password}
+              error={formik.errors.password}
+              onChange={formik.handleChange}
+              id="password"
+            />
+            <Btn type="submit" classes="signup-join btn-big">
+              I'm back :)
+            </Btn>
+          </form>
         </div>
       </div>
     </main>
