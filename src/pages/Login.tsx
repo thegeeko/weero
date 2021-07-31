@@ -11,7 +11,6 @@ import { auth } from "../utils/firebase";
 
 const Signin: React.FC = () => {
   const [emailStatus, setEmailStatus] = useState(false);
-  const [user, setUser] = useState<firebase.default.User | null>(null);
   const query = useQuery();
   const history = useHistory();
   const screenSize = useScreenSize();
@@ -30,21 +29,17 @@ const Signin: React.FC = () => {
     validationSchema: signinValidation,
   });
 
-  auth.onAuthStateChanged((_user) => {
-    if (_user) {
-      setUser(_user);
-      setEmailStatus(_user.emailVerified);
-      emailStatus ? history.push("/tl") : history.push("/signup");
-    } else {
-      setUser(null);
-    }
-  });
-
   useEffect(() => {
     let _email = query.get("email");
     if (_email) {
       formik.setFieldValue("email", _email);
     }
+    auth.onAuthStateChanged((_user) => {
+      if (_user) {
+        setEmailStatus(_user.emailVerified);
+        emailStatus ? history.push("/tl") : history.push("/signup");
+      }
+    });
   }, []);
 
   return (

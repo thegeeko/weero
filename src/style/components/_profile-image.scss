@@ -1,0 +1,17 @@
+.profile-image-cont {
+  @include bordered;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: $secondary;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+  span {
+    font-size: 300%;
+  }
+}

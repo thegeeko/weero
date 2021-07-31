@@ -3,8 +3,11 @@ import { auth } from "../utils/firebase";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Input from "../components/Input";
 import ProfileImage from "../components/ProfileImage";
+import Btn from "../components/Btn";
+import { useHistory } from "react-router-dom";
 
 const ProfileSettings: React.FC = () => {
+  const history = useHistory();
   const [profileImageBase64, changeProfileImageBase64] = useState("");
   const user = auth.currentUser;
 
@@ -18,6 +21,20 @@ const ProfileSettings: React.FC = () => {
     if (e.currentTarget.files !== null && e.currentTarget.files[0])
       fileReader.readAsDataURL(e.currentTarget.files[0]);
   };
+
+  useEffect(
+    () =>
+      auth.onAuthStateChanged((_user) => {
+        if (_user && _user.emailVerified) {
+          formik.setFieldValue("username", _user.displayName);
+          formik.setFieldValue("email", _user.email);
+          formik.setFieldValue("profileURL", _user.photoURL);
+        } else {
+          history.push("/signup");
+        }
+      }),
+    []
+  );
 
   const formik = useFormik({
     onSubmit: () => {},
@@ -33,10 +50,13 @@ const ProfileSettings: React.FC = () => {
       <div className="profile-settings">
         <div>
           <h1 className="logo">Weero</h1>
-          <h3 className="sub-header">Customize your profile</h3>
+          <p className="sub-header">Customize your profile</p>
         </div>
         <form onSubmit={formik.handleSubmit}>
           <Input
+            customProps={{
+              accept: "image/png, image/jpeg",
+            }}
             type="file"
             placeholder="ur profile image"
             onChange={handleProfileChange}
@@ -70,6 +90,9 @@ const ProfileSettings: React.FC = () => {
             onChange={formik.handleChange}
             id="email"
           />
+          <Btn type="submit" classes="btn-big">
+            update
+          </Btn>
         </form>
       </div>
     </main>

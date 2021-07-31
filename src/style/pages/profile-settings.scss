@@ -16,5 +16,22 @@
 
   .sub-header {
     margin-top: 0;
+    font-size: $prp-font-size;
+  }
+
+  form {
+    font-size: $prp-font-size;
+    input,
+    label {
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+
+  label {
+    padding: 0 !important;
+    height: 150px;
+    width: 150px;
+    margin: auto;
   }
 }

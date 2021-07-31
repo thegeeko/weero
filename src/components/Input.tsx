@@ -8,11 +8,13 @@ type ButtonProps = {
   onChange?: Function;
   value?: string;
   error?: string;
+  customProps?: object;
 };
 
 const Input: React.FC<ButtonProps> = (props: ButtonProps) => (
   <div className={props.error ? "input-error-cont" : ""}>
     <input
+      {...props.customProps}
       onChange={(e) => (props.onChange ? props.onChange(e) : "")}
       className={`input ${props.error ? "input-error" : ""} ${
         props.classes ? props.classes : ""

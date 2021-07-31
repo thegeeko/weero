@@ -7,12 +7,17 @@ import useQuery from "../hooks/useQuery";
 import { useFormik } from "formik";
 import { signupValidation } from "../utils/validators";
 import { auth } from "../utils/firebase";
+import { useHistory } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const [emailStatus, setEmailStatus] = useState(false);
   const [user, setUser] = useState<firebase.default.User | null>(null);
+  const history = useHistory();
   const query = useQuery();
   const screenSize = useScreenSize();
+  const handleResendConfirmation = () => {
+    user?.sendEmailVerification();
+  };
   const formik = useFormik({
     onSubmit: (creds) => {
       auth
@@ -20,9 +25,10 @@ const Signup: React.FC = () => {
         .then((newUser) => {
           newUser.user
             ?.updateProfile({ displayName: creds.username })
-            .then((a) => {
-              console.log(a);
-            });
+            .catch((err) => formik.setFieldError("username", err.message));
+          newUser.user
+            ?.sendEmailVerification()
+            .catch((err) => formik.setFieldError("email", err.message));
         })
         .catch((err) => {
           formik.setFieldError("email", err.message);
@@ -37,20 +43,22 @@ const Signup: React.FC = () => {
     validationSchema: signupValidation,
   });
 
-  auth.onAuthStateChanged((_user) => {
-    if (_user) {
-      setUser(_user);
-      setEmailStatus(_user.emailVerified);
-    } else {
-      setUser(null);
-    }
-  });
-
   useEffect(() => {
     let _email = query.get("email");
     if (_email) {
       formik.setFieldValue("email", _email);
     }
+    auth.onAuthStateChanged((_user) => {
+      if (_user) {
+        setUser(_user);
+        setEmailStatus(_user.emailVerified);
+        if (emailStatus) {
+          history.push("/tl");
+        }
+      } else {
+        setUser(null);
+      }
+    });
   }, []);
 
   return (
@@ -75,9 +83,14 @@ const Signup: React.FC = () => {
           </div>
 
           {user && !emailStatus && (
-            <p className="form">
-              Verification email is sent to your email check it out plz :3.
-            </p>
+            <div className="form">
+              <p style={{ marginBottom: "20px" }}>
+                Verification email is sent to your email check it out plz :3.
+              </p>
+              <Btn classes="btn-big" onClick={handleResendConfirmation}>
+                resend the email
+              </Btn>
+            </div>
           )}
 
           {!user && (
@@ -114,7 +127,7 @@ const Signup: React.FC = () => {
                 onChange={formik.handleChange}
                 id="passwordConfirm"
               />
-              <Btn type="submit" classes="signup-join btn-big">
+              <Btn type="submit" classes="btn-big">
                 join :)
               </Btn>
             </form>
