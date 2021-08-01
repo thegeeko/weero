@@ -27,3 +27,11 @@ export const signinValidation = Yup.object({
     .required("Add email  please"),
   password: Yup.string().required("Add password plz"),
 });
+
+export const profileValidation = Yup.object({
+  username: Yup.string()
+    .required("You have to add username")
+    .test("len", "Must be 3 characters or more", (val) =>
+      val ? val.length >= 3 : false
+    ),
+});

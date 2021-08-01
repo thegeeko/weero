@@ -1,15 +1,17 @@
 import { useFormik } from "formik";
-import { auth } from "../utils/firebase";
+import { auth, storage } from "../utils/firebase";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Input from "../components/Input";
 import ProfileImage from "../components/ProfileImage";
 import Btn from "../components/Btn";
 import { useHistory } from "react-router-dom";
+import { profileValidation } from "../utils/validators";
 
 const ProfileSettings: React.FC = () => {
   const history = useHistory();
   const [profileImageBase64, changeProfileImageBase64] = useState("");
-  const user = auth.currentUser;
+  let user = auth.currentUser;
+  const profileStorageRef = storage.ref(`profiles/${user?.uid}`);
 
   const handleProfileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fileReader = new FileReader();
@@ -27,8 +29,8 @@ const ProfileSettings: React.FC = () => {
       auth.onAuthStateChanged((_user) => {
         if (_user && _user.emailVerified) {
           formik.setFieldValue("username", _user.displayName);
-          formik.setFieldValue("email", _user.email);
           formik.setFieldValue("profileURL", _user.photoURL);
+          user = _user;
         } else {
           history.push("/signup");
         }
@@ -37,12 +39,31 @@ const ProfileSettings: React.FC = () => {
   );
 
   const formik = useFormik({
-    onSubmit: () => {},
+    onSubmit: async (creds) => {
+      let updatedUser: { displayName?: string; photoURL?: string } = {};
+      if (creds.username !== user?.displayName) {
+        updatedUser.displayName = creds.username;
+      }
+      if (profileImageBase64) {
+        let uploadRes = await profileStorageRef.putString(
+          profileImageBase64,
+          "data_url"
+        );
+        let profileLink = await uploadRes.ref.getDownloadURL();
+        profileLink
+          ? (updatedUser.photoURL = profileLink)
+          : formik.setFieldError("username", profileLink);
+      }
+      if (updatedUser && Object.keys(updatedUser).length > 0 && user) {
+        await user.updateProfile(updatedUser);
+        console.log(user);
+      }
+    },
     initialValues: {
-      email: "",
       username: "",
       profileURL: "",
     },
+    validationSchema: profileValidation,
   });
 
   return (
@@ -81,14 +102,6 @@ const ProfileSettings: React.FC = () => {
             error={formik.errors.username}
             onChange={formik.handleChange}
             id="username"
-          />
-          <Input
-            type="email"
-            placeholder="Email"
-            value={formik.values.email}
-            error={formik.errors.email}
-            onChange={formik.handleChange}
-            id="email"
           />
           <Btn type="submit" classes="btn-big">
             update
